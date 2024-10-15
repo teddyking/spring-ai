@@ -144,4 +144,4 @@ curl -XPOST \
 * Responses are quite tempromental ... sometimes it works, sometimes it doesn't 🤷‍♂️
   * I think the problem is that sometimes the model doesn't return a response that adheres to the required JSON schema, but I'm not 100% sure about that
 * I started trying to integrate Stable Diffusion for text-to-image generation
-  * It's also not quite working, so I have disabled image generation for now
+  * It's also not quite working and I'm not sure why

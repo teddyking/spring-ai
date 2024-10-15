@@ -40,6 +40,7 @@ dependencies {
 	implementation "org.springframework.ai:spring-ai-spring-boot-docker-compose:${springAiVersion}"
     implementation 'org.springframework.boot:spring-boot-docker-compose:3.4.0-M2' // Adds support for redis/redis-stack-server container image
 	implementation 'io.pivotal.cfenv:java-cfenv-boot:3.2.0'
+	implementation 'org.springframework.ai:spring-ai-stability-ai-spring-boot-starter'
 
 	implementation 'org.apache.commons:commons-lang3'
 

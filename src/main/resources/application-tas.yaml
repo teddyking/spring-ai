@@ -4,6 +4,8 @@ spring:
     org.springframework.ai.autoconfigure.ollama.OllamaAutoConfiguration,
     org.springframework.ai.autoconfigure.vectorstore.redis.RedisVectorStoreAutoConfiguration
   ai:
+    stabilityai:
+      api-key: <API KEY>
     openai:
       chat:
         options:
