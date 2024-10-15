@@ -115,13 +115,13 @@ cf create-service postgres on-demand-postgres-db psql-1
 ./gradlew bootJar
 ```
 
-# Push app
+## Push app
 
 ```console
 cf push -f deployment/tanzu-platform-for-cf/manifest.yml
 ```
 
-# Post recipe pdf for RAG
+## Post recipe pdf for RAG
 
 ```console
 curl -XPOST \
