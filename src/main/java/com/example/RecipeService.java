@@ -4,6 +4,8 @@ import org.apache.commons.lang3.reflect.FieldUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.chat.client.ChatClient.CallResponseSpec;
+import org.springframework.ai.chat.client.ChatClient.ChatClientRequestSpec;
 import org.springframework.ai.chat.client.advisor.QuestionAnswerAdvisor;
 import org.springframework.ai.chat.prompt.PromptTemplate;
 import org.springframework.ai.image.ImageModel;
@@ -22,6 +24,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class RecipeService {
@@ -74,6 +77,13 @@ public class RecipeService {
         }
 
         if (imageModel.isPresent()) {
+            log.info("Start image generation");
+            log.info("Recipe name");
+            log.info(recipe.name());
+            log.info("Ingredients");
+            log.info(recipe.ingredients().toString());
+            log.info("String.join Ingredients");
+            log.info(String.join(",", recipe.ingredients()));
             var imagePromptTemplate = new PromptTemplate(imageForRecipePromptResource);
             var imagePromptInstructions = imagePromptTemplate.render(Map.of("recipe", recipe.name(), "ingredients", String.join(",", recipe.ingredients())));
             var imageGeneration = imageModel.get().call(new ImagePrompt(imagePromptInstructions)).getResult();
@@ -84,13 +94,22 @@ public class RecipeService {
 
     private Recipe fetchRecipeFor(List<String> ingredients) {
         log.info("Fetch recipe without additional information");
+        log.info(ingredients.toString());
 
-        return chatClient.prompt()
+        ChatClientRequestSpec chatclientrequestspec = chatClient.prompt()
                 .user(us -> us
                         .text(recipeForIngredientsPromptResource)
-                        .param("ingredients", String.join(",", ingredients)))
-                .call()
-                .entity(Recipe.class);
+                        .param("ingredients", String.join(",", ingredients)));
+        CallResponseSpec callResponseSpec = chatclientrequestspec.call();
+
+        log.info("Start RequestSpec");
+        log.info(chatclientrequestspec.toString());
+        log.info("End RequestSpec");
+        log.info("Start ResponseSpec");
+        log.info(callResponseSpec.chatResponse().toString());
+        log.info("End ResponseSpec");
+
+        return callResponseSpec.entity(Recipe.class);
     }
 
     private Recipe fetchRecipeWithFunctionCallingFor(List<String> ingredients) {
