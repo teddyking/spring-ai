@@ -121,6 +121,15 @@ cf create-service postgres on-demand-postgres-db psql-1
 cf push -f deployment/tanzu-platform-for-cf/manifest.yml
 ```
 
+# Post recipe pdf for RAG
+
+```console
+curl -XPOST \
+  -F "file=@$PWD/german_recipes.pdf" \
+  -F "pageBottomMargin=50" \
+  http://<APP ROUTE>/api/v1/recipes/upload # update <APP ROUTE> accordingly
+```
+
 ## Changelog
 
 * Bumped to spring ai version 1.0.0-M3
@@ -136,4 +145,3 @@ cf push -f deployment/tanzu-platform-for-cf/manifest.yml
   * I think the problem is that sometimes the model doesn't return a response that adheres to the required JSON schema, but I'm not 100% sure about that
 * I started trying to integrate Stable Diffusion for text-to-image generation
   * It's also not quite working, so I have disabled image generation for now
-* I haven't tried any of the RAG features yet either (milage may vary)
